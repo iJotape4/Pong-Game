@@ -8,18 +8,14 @@ using UnityEngine;
 
 public class GUICommitTest : MonoBehaviour
 {
-    public const string INFO_FILE_NAME = "buildInfo.txt";
+    public const string INFO_FILE_NAME = "Version Info.txt";
 
-    public int offsetX;
-    public int offsetY;
-
-    private bool _showMenu = false;
     private string _date;
     private bool _existGITInfo;
     private string _branchInfo;
     private string _commitInfo;
     private bool _gitInfoOpen;
-    private const float LINE_HEIGHT = 20;
+    private const float height = 20;
 
     void Awake()
     {
@@ -30,15 +26,14 @@ public class GUICommitTest : MonoBehaviour
         else
             ReadInfoFromFile();
     }
-
+    #region ShowInfo
     private void ReadInfoInEditor()
-    {   
+    {
         string[] versionInfo = GetVersionInfo();
         _date = versionInfo[0];
         _commitInfo = versionInfo[1];
         _branchInfo = versionInfo[2];
         _existGITInfo = versionInfo[1].Length > 0;
-        _showMenu = false;
     }
 
     private void ReadInfoFromFile()
@@ -49,7 +44,7 @@ public class GUICommitTest : MonoBehaviour
             return;
 
         string infoContent = File.ReadAllText(filePath).Trim();
-        if (infoContent.Contains("|")) // si es verdadero es porque posee informacion de GIT
+        if (infoContent.Contains("|")) // if true, it has GIT Info
         {
             string[] parts = infoContent.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             Debug.Assert(parts.Length == 3, "VersionInfoLabel.LoadInfoInFile: La informacion almacenada en el archivo " + INFO_FILE_NAME + " no es valida.");
@@ -63,8 +58,6 @@ public class GUICommitTest : MonoBehaviour
             _date = infoContent;
             _existGITInfo = false;
         }
-
-        _showMenu = false;
     }
 
     private string GetInfoFilePathInBuild()
@@ -81,21 +74,33 @@ public class GUICommitTest : MonoBehaviour
         return filePath;
     }
 
-    // Update is called once per frame
-    void Update()
+#if TEST_BUILD
+
+    void OnGUI()
     {
-       
+        float width = 200;
+        int boxSize = 3;
+        GUI.Box(new Rect(Screen.width - width - 3, 0, width, boxSize * height), "");
+        if (Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            GUI.Label(new Rect(Screen.width - width, 0, width, height), "Play Date: " + _date);
+        }
+        else
+        {
+            GUI.Label(new Rect(Screen.width - width, 0, width, height), "Build Date: " + _date);
+        }
+
+        GUI.Label(new Rect(Screen.width - width, 1 * height, width, height), "Commit: " + _commitInfo);
+        GUI.Label(new Rect(Screen.width - width, 2 * height, width, height), "Branch: " + _branchInfo);
+
+
     }
 
-    private void OnGUI()
-    {
-        float width = 200 + (_existGITInfo ? LINE_HEIGHT : 0);
-        //  GUILayout.BeginArea(new Rect(10 + offsetX, 40 + offsetY, 215, 9999));
-        GUI.Label(new Rect(Screen.width - width, 1 * LINE_HEIGHT, width, LINE_HEIGHT), "Commit: " + _commitInfo);
-        GUI.Label(new Rect(Screen.width - width, 2 * LINE_HEIGHT, width, LINE_HEIGHT), "Branch: " + _branchInfo);
-      //  GUILayout.Label($"Connecting to ..");
-    }
+#endif
 
+    #endregion
+
+    #region Get Info
     public string[] GetVersionInfo()
     {
         string date = GetDateInfo();
@@ -104,7 +109,7 @@ public class GUICommitTest : MonoBehaviour
         bool existGITInfo = gitFolderPath != null;
         string commitInfo = "";
         string branchInfo = "";
-        if (existGITInfo) // si es diferente es porque existe el folder.
+        if (existGITInfo) // if != , the folder exists
         {
             commitInfo = GetCommitInfo(gitFolderPath);
             branchInfo = GetBranchInfo(gitFolderPath);
@@ -126,7 +131,7 @@ public class GUICommitTest : MonoBehaviour
         string[] splits = appDataPath.Split(new char[] { '/' });
         int numSplits = splits.Length - 2;
 
-        if (numSplits <= 0) // el proyecto lo pusieron en el directorio raiz?
+        if (numSplits <= 0)
             return null;
 
         string gitFolderPath = "";
@@ -176,7 +181,7 @@ public class GUICommitTest : MonoBehaviour
         if (line != null)
         {
             result = line.Substring(0, 41);
-            if (result.Length > 10) // si el texto es muy grande, el Label no lo muestra, por eso lo recorto.
+            if (result.Length > 10) //If the text is very long, it isn't shown by the label. Because of this, text is being cutted. 
                 result = result.Substring(0, 9) + "...";
         }
 
@@ -192,9 +197,11 @@ public class GUICommitTest : MonoBehaviour
         {
             branchInfo = branchInfo.Substring(8);
         }
-        if (branchInfo.Length > 20) // si el texto es muy grande, el Label no lo muestra, por eso lo recorto.
+        if (branchInfo.Length > 20) // If the text is very long, it isn't shown by the label. Because of this, text is being cutted. 
             branchInfo = branchInfo.Substring(0, 20) + "...";
 
         return branchInfo;
     }
+    #endregion
+
 }
