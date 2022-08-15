@@ -6,7 +6,7 @@ public class VersionWindowCreator : MonoBehaviour
     {
         GameObject windowVersion = new GameObject("GUIcommit");
 
-        windowVersion.AddComponent<GUICommitTest>();
+        windowVersion.AddComponent<GUICommitWindow>();
         return windowVersion;
     }
 }

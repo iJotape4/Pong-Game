@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class GUICommitTest : MonoBehaviour
+public class GUICommitWindow : MonoBehaviour
 {
     public const string INFO_FILE_NAME = "Version Info.txt";
 

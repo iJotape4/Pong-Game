@@ -1,0 +1,23 @@
+{
+    "name": "QAFrameworkTests",
+    "rootNamespace": "",
+    "references": [
+        "GameManagement",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "DreamsUncorporated"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
