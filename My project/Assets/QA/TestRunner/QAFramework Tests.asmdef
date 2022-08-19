@@ -2,10 +2,10 @@
     "name": "QAFrameworkTests",
     "rootNamespace": "",
     "references": [
-        "GameManagement",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "DreamsUncorporated"
+        "Unity.InputSystem",
+        "Unity.InputSystem.TestFramework"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

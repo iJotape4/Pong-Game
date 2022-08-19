@@ -21,7 +21,7 @@ public class FileCreator : IPreprocessBuildWithReport
         }
         if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64)
         {
-            GUICommitTest infoGetter = new GUICommitTest();
+            GUICommitWindow infoGetter = new GUICommitWindow();
             string[] versionInfo = infoGetter.GetVersionInfo();
             SaveInfoInFile(date: versionInfo[0], commitInfo: versionInfo[1], branchInfo: versionInfo[2]);
 
@@ -46,7 +46,7 @@ public class FileCreator : IPreprocessBuildWithReport
         string buildPath = EditorUserBuildSettings.GetBuildLocation(BuildTarget.StandaloneWindows64);
 
         string[] parts = buildPath.Split(new char[] { '\\' });
-        string filePath = parts[0] + "/" + GUICommitTest.INFO_FILE_NAME;
+        string filePath = parts[0] + "/" + GUICommitWindow.INFO_FILE_NAME;
         return filePath;
     }
 #endif

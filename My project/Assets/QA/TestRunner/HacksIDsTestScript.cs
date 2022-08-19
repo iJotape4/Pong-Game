@@ -4,22 +4,19 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEditor.SceneManagement;
-using PlanetLander.GameManagement.LanderSystem;
-using PlanetLander.GameManagement.UISystem;
 using UnityEngine.InputSystem;
-using DreamsUncorporated.UISystem;
-using PlanetLander.GameManagement.MissionSystem;
+
 
 public class HacksIDsTestScript : InputTestFixture
 {
     #region Fields
     
-    private UI_MainMenu uiMainMenu;
+//private UI_MainMenu uiMainMenu;
     private GameObject _uiManager;
     private GameObject _circularLoad;
     private GameObject ship;
 
-    private PlayerMovement playerController;
+   // private PlayerMovement playerController;
     Keyboard gamepad;
 
     #endregion
@@ -38,9 +35,6 @@ public class HacksIDsTestScript : InputTestFixture
     [UnityTest]
     public IEnumerator FullFlowTest()
     {
-       HackeableDevice[] HacksList =  GameObject.FindObjectsOfType<HackeableDevice>();
-
-        Debug.Log(HacksList);
 
         yield return new WaitForSeconds(3f);
 

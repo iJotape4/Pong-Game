@@ -4,13 +4,12 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEditor.SceneManagement;
-using PlanetLander.GameManagement.LanderSystem;
 
 public class ProtoypeScript 
 {
     #region Fields
-    private GameObject ship;
-    private PlayerMovement playerController;   
+   // private GameObject ship;
+    //private PlayerMovement playerController;   
     #endregion
 
 
@@ -28,12 +27,8 @@ public class ProtoypeScript
         // Use yield to skip a frame.
         yield return null;
 
-        ship = GameObject.Find("pf_ParentLanderMantis(Clone)");
-        playerController = ship.GetComponent<PlayerMovement>();
-        playerController.UpdatePropeller(10f);     
 
         yield return new WaitForSeconds(10f);
-        Assert.That(ship != null);
     }
 
     [TearDown]
@@ -41,4 +36,5 @@ public class ProtoypeScript
     {
         EditorSceneManager.UnloadSceneAsync("sce_lander_mission_1");
     }
+    
 }
