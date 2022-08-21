@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Mirror;
 
-public class UIManager : MonoBehaviour
+public class UIManager : NetworkBehaviour
 {
     public static UIManager Instance;
     public GameManager _gameManager;
@@ -56,6 +57,10 @@ public class UIManager : MonoBehaviour
     //This manage the showed timer before starting the game
     public  IEnumerator InitialCount()
     {
+        while(NetworkManagerPong.Instance.numPlayers !=2){
+            yield return null;
+        }
+        
         _initialCounter.transform.parent.gameObject.SetActive(true);
         int counter = 5;       
         while (counter != 0)

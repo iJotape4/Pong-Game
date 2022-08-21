@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 
-//This Class is parent for ball, Player and AI. Contains commons attributtes and methods for these elements.
-public class GameActorController : MonoBehaviour
+
+ //This Class is parent for ball, Player and AI. Contains commons attributtes and methods for these elements.
+ public class GameActorController : NetworkBehaviour
 {
-    
     protected UIManager uimanager;
     protected GameManager _gameManager;
 
@@ -23,6 +24,7 @@ public class GameActorController : MonoBehaviour
     //On Start we are obtaining the references of all the necessary components for each Game Actor script.
     protected void Start()
     {
+        
         uimanager = UIManager.Instance;
        _gameManager = GameManager.Instance;
 

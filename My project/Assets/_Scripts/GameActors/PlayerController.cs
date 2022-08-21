@@ -23,6 +23,9 @@ public class PlayerController : GameActorController
     //On fixed update, we are moving the player, according to Movement Input 
     public void FixedUpdate()
     {
+        if(!isLocalPlayer){
+            return;
+        }
         _rb.MovePosition(_rb.position + _moveInput * _speed * Time.fixedDeltaTime);
        
     }
