@@ -23,9 +23,6 @@ public class PlayerController : GameActorController
     //On fixed update, we are moving the player, according to Movement Input 
     public void FixedUpdate()
     {
-        if(!isLocalPlayer){
-            return;
-        }
         _rb.MovePosition(_rb.position + _moveInput * _speed * Time.fixedDeltaTime);
        
     }
@@ -43,7 +40,7 @@ public class PlayerController : GameActorController
     //The only Input method for this Game (is called using InputSystem)
     public void OnMove(InputValue value)
     {
-        if (!uimanager.gameStarted)
+        if (!uimanager.gameStarted || !isLocalPlayer)
         {
             return;
         }
