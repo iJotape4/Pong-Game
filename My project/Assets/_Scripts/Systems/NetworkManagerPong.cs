@@ -7,6 +7,8 @@ public class NetworkManagerPong : NetworkManager
 {
      public static NetworkManagerPong Instance;
 
+    public Transform LeftPlayerSpawnPoint;
+    public Transform RightPlayerSpawnPoint;
      //On Awake we are creating the Network Manager Instance
     private void Awake()
     {
@@ -24,11 +26,19 @@ public class NetworkManagerPong : NetworkManager
         DontDestroyOnLoad(this);
     }
 
+
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        base.OnServerAddPlayer(conn);
-        //if(numPlayers);
+        Transform startPosition = numPlayers == 0 ? LeftPlayerSpawnPoint : RightPlayerSpawnPoint;
+        GameObject player = Instantiate(playerPrefab, startPosition.position, Quaternion.identity);
+        NetworkServer.AddPlayerForConnection(conn, player);  //Le da al jugador instanciado la autoriadad de esta conexión.
 
+    }
+
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        base.OnServerDisconnect(conn);
     }
 
 }
