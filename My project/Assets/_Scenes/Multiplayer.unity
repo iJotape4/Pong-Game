@@ -1375,6 +1375,9 @@ MonoBehaviour:
   spawnPrefabs: []
   LeftPlayerSpawnPoint: {fileID: 1431491317}
   RightPlayerSpawnPoint: {fileID: 827393884}
+  _ball: {fileID: 0}
+  _ballPrefab: {fileID: 5171168412360529265, guid: 44873a0004aa4be4fb4abcf8be0d8fdd, type: 3}
+  uIManager: {fileID: 2063060288}
 --- !u!4 &1223905123
 Transform:
   m_ObjectHideFlags: 0

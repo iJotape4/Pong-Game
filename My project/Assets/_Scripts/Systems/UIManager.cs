@@ -13,7 +13,7 @@ public class UIManager : NetworkBehaviour
     public bool gameStarted = false;
     public bool playerOnService;
 
-    [SerializeField] private TextMeshProUGUI _initialCounter;
+    [SerializeField] public TextMeshProUGUI _initialCounter;
     [SerializeField] private TextMeshProUGUI _player1Score;
     [SerializeField] private TextMeshProUGUI _iaScore;
 
@@ -38,7 +38,7 @@ public class UIManager : NetworkBehaviour
     //On Start we are calculating the side of the service. Also managment of the initial counter before playing.
     void Start()
     {
-        StartCoroutine(InitialCount());
+        //StartCoroutine(InitialCount());
         playerOnService = CalculateFirstService();
         _gameManager = GameManager.Instance;
     }
@@ -55,40 +55,10 @@ public class UIManager : NetworkBehaviour
     }
 
     //This manage the showed timer before starting the game
-    public  IEnumerator InitialCount()
-    {
-        while(NetworkManagerPong.Instance.numPlayers !=2){
-            yield return null;
-        }
-        
-        _initialCounter.transform.parent.gameObject.SetActive(true);
-        int counter = 5;       
-        while (counter != 0)
-        {
-            _initialCounter.text = counter.ToString();
-            counter--;
-            yield return new WaitForSeconds(1f);
-        }
-
-        _initialCounter.text = "START";
-        yield return new WaitForSeconds(0.5f);
-
-        _initialCounter.transform.parent.gameObject.SetActive(false);
-
-        gameStarted = true;
-        InstantiateABall();     
-    }
-
-
+    
 
     //This method is  responsible for ball instantiation.
-    public void InstantiateABall()
 
-    {
-        float xpos = CalculatePosXBall();
-        Vector3 spawiningBallposition = new Vector3(1f * xpos, Random.Range(-6f, 7f) , -1f );
-        Instantiate(_ballPrefab, spawiningBallposition, Quaternion.identity);
-    }
 
     //This Method receive the score of the player and shows it in the UI
     public void UpdatePlayerScore(int score)
@@ -105,17 +75,7 @@ public class UIManager : NetworkBehaviour
     }
 
     //This improve the initial ball position, depends of the side on service. The Idea is position the ball a little behind the center of the scenary, with the objective of give more chances to both players.
-    public int CalculatePosXBall()
-    {
-        if (playerOnService)
-        {
-            return -1;
-        }
-        else
-        {
-            return 1;
-        }
-    }
+    
 
     //this Method shows the GameOver Texts When a player Reaches 6 points.
     public void ShowGameOver()

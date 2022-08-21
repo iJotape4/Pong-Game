@@ -58,7 +58,7 @@ public class PlayerController : GameActorController
         {
             return;
         }
-        StartCoroutine(uimanager.InitialCount());
+        StartCoroutine(NetworkManagerPong.Instance.InitialCount());
         _gameManager.PlayAgain();
         EnableOnPlay();
 

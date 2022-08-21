@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class BallController : GameActorController
 {
@@ -62,7 +63,7 @@ public class BallController : GameActorController
 
     }
 
-
+    [ServerCallback]
     //Checks when the ball collisions with lateral limits, in order to update the score of the corresponding player.
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -88,7 +89,7 @@ public class BallController : GameActorController
     {
         _sprite.enabled = false;
         yield return new WaitForSeconds(1f);
-        uimanager.InstantiateABall();
+        NetworkManagerPong.Instance.InstantiateABall();
         Destroy(gameObject);
     }
 
