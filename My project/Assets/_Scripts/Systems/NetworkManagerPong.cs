@@ -13,7 +13,8 @@ public class NetworkManagerPong : NetworkManager
     public GameObject _ball;
     public GameObject _ballPrefab;
 
-    public UIManager uIManager = UIManager.Instance;
+    public UIManager uIManager = UIManager._instance;
+    public NetworkManagerPong networkManager;
 
      //On Awake we are creating the Network Manager Instance
     private void Awake()
@@ -32,7 +33,10 @@ public class NetworkManagerPong : NetworkManager
         DontDestroyOnLoad(this);
     }
 
-
+    public override void OnStartServer()
+    {
+        networkManager = FindObjectOfType<NetworkManagerPong>();
+    }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
@@ -79,7 +83,7 @@ public class NetworkManagerPong : NetworkManager
 
     public int CalculatePosXBall()
     {
-        if (UIManager.Instance.playerOnService)
+        if (UIManager._instance.playerOnService)
         {
             return -1;
         }

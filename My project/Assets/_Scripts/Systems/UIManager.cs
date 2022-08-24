@@ -4,9 +4,8 @@ using UnityEngine;
 using TMPro;
 using Mirror;
 
-public class UIManager : NetworkBehaviour
+public class UIManager : PersistentSingleton<UIManager>
 {
-    public static UIManager Instance;
     public GameManager _gameManager;
 
     public GameObject _ballPrefab;
@@ -17,30 +16,12 @@ public class UIManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _player1Score;
     [SerializeField] private TextMeshProUGUI _iaScore;
 
-
-    //On Awake we are creating the UI Manager Instance
-    private void Awake()
-    {
-        if (UIManager.Instance == null)
-        {
-            UIManager.Instance = this.GetComponent<UIManager>();
-
-        }
-        else if (UIManager.Instance != null && UIManager.Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-
-        }
-        DontDestroyOnLoad(this);
-    }
-
     //On Start we are calculating the side of the service. Also managment of the initial counter before playing.
     void Start()
     {
         //StartCoroutine(InitialCount());
         playerOnService = CalculateFirstService();
-        _gameManager = GameManager.Instance;
+        _gameManager = GameManager._instance;
     }
 
 
@@ -60,8 +41,9 @@ public class UIManager : NetworkBehaviour
     //This method is  responsible for ball instantiation.
 
 
+    [ClientRpc]
     //This Method receive the score of the player and shows it in the UI
-    public void UpdatePlayerScore(int score)
+    public void RpcUpdatePlayerScore(int score)
     {
         _player1Score.text = score.ToString();
         playerOnService = true;

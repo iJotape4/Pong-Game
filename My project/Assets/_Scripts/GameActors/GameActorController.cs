@@ -25,8 +25,8 @@ using Mirror;
     protected void Start()
     {
         
-        uimanager = UIManager.Instance;
-       _gameManager = GameManager.Instance;
+        uimanager = UIManager._instance;
+       _gameManager = GameManager._instance;
 
         _rb = GetComponent<Rigidbody2D>();
         _bc = GetComponent<BoxCollider2D>();
